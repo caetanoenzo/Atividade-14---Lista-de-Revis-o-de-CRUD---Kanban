@@ -30,10 +30,10 @@
                                 <a class="nav-link" aria-current="page" href="../../index.php">Dashboard</a>
                             </li>
                             <li class="nav-item ms-5">
-                                <a class="nav-link" aria-current="page" href="../tarefas/read.php">Tarefas</a>
+                                <a class="nav-link" aria-current="page" href="../../../../2025_atividades_enzo/Atividade-14/public/tarefas/create.php">Cadastrar Tarefas</a>
                             </li>
                             <li class="nav-item ms-5">
-                                <a class="nav-link" href="../usuarios/read.php">Responsáveis</a>
+                                <a class="nav-link" href="../../../../2025_atividades_enzo/Atividade-14/public/usuarios/create.php">Cadastrar Responsáveis</a>
                             </li>
                         </ul>
                     </div>

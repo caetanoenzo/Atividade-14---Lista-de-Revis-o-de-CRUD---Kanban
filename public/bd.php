@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "root";
-$dbname = "kanban_bd";
+$dbname = "kanban_enzo_bd";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

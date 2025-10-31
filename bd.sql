@@ -1,6 +1,6 @@
-CREATE DATABASE kanban_bd;
+CREATE DATABASE kanban_enzo_bd;
 
-USE kanban_bd;
+USE kanban_enzo_bd;
 
 CREATE TABLE
     usuarios (
