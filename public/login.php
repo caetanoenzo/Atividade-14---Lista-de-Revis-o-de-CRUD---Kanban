@@ -1,53 +1,60 @@
 <?php
 
-include '../bd.php';
-
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $nome = $_POST['nome'];
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
-
-    $sql = "INSERT INTO usuarios (nome,email,senha) VALUES ('$nome','$email','$senha')";
-
-    if($conn->query($sql) === true) {
-        echo "Usuário cadastrado com sucesso.";
-    } else {
-        echo "Erro " . $sql . '<br>' . $conn->error;
-    }
-    $conn->close();
-}
+include 'bd.php';
 
 session_start();
 
-if (!isset($_SESSION['id'])) {
-    header('Location: public/login.php');
-    exit();
+$msg = "";
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $user = $_POST["nome"] ?? "";
+    $pass = $_POST["senha"] ?? "";
+
+    $stmt = $conn->prepare("SELECT id, nome, senha FROM usuario WHERE nome=? AND senha=?");
+    $stmt->bind_param("ss", $user, $pass);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $dados = $result->fetch_assoc();
+    $stmt->close();
+
+    if ($dados) {
+        $_SESSION["id"] = $dados["id"];
+        $_SESSION["nome"] = $dados["nome"];
+        header("Location: ../index.php?id=" . $dados["id"]);
+        exit;
+    } else {
+        $msg = "Usuário ou senha incorretos!";
+    }
+}
+
+if (isset($_GET['logout'])) {
+    session_destroy();
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../../styles/style.css">
-    <title>Cadastrar Responsável</title>
 </head>
 
 <body>
 
-    <div class="container-fluid">
+    <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
 
         <div class="row">
             <?php include __DIR__ . '../../partials/header.php'; ?>
         </div>
 
-        <h2>Bem-vindo(a), <?= $_SESSION["nome"] ?>!</h2>s
-
         <div class="row ms-5 mt-5 me-5">
+            <p class="mt-4 fw-bold text-center">Login</p>
+            <?php if ($msg): ?><p class=""><?= $msg ?></p><?php endif; ?>
 
             <form action="create.php" method="POST">
                 <div class="mb-3">
@@ -57,11 +64,11 @@ if (!isset($_SESSION['id'])) {
 
 
                 <div class="mb-3">
-                    <label>Email: </label>
-                    <input type="email" name="email">
+                    <label>Senha: </label>
+                    <input type="password" name="senha">
                 </div>
 
-                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                <button type="submit" class="btn btn-primary">Entrar</button>
                 <button type="button" class="btn btn-primary" onclick="window.location.href='read.php'">Cancelar</button>
             </form>
         </div>
