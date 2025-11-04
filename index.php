@@ -22,14 +22,17 @@
 
 
         <div class="row">
-            <div class="col">
-                
+            <div class="col mt-3 mb-3 text-center">
+                <p class="h2">A fazer</p>
+                <?php include 'public/tarefas/readFazer.php'; ?>
             </div>
-            <div class="col">
-
+            <div class="col mt-3 mb-3 text-center">
+                <p class="h2">Fazendo</p>
+                <?php include 'public/tarefas/readFazendo.php'; ?>
             </div>
-            <div class="col">
-
+            <div class="col mt-3 mb-3 text-center">
+                <p class="h2">Pronto
+                <?php include 'public/tarefas/readPronto.php'; ?>
             </div>
         </div>
 

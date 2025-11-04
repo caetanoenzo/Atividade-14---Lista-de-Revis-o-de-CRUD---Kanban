@@ -11,7 +11,7 @@ CREATE TABLE
 
 CREATE TABLE
     tarefas (
-        id INT AUTO_INCREMENT PRIMARY KEY,
+        id_tarefa INT AUTO_INCREMENT PRIMARY KEY,
         descricao VARCHAR(200) NOT NULL,
         nome_setor VARCHAR(100) NOT NULL,
         prioridade ENUM ('Baixa', 'Média', 'Alta') NOT NULL,

@@ -25,70 +25,45 @@ $result = $conn->query($sql);
 <body>
 
     <div class="container-fluid">
-        <div class="row ms-5 mt-5 me-5">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Nacionalidade</th>
-                        <th>Ano de Nascimento</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($result->num_rows > 0): ?>
-                        <?php while ($row = $result->fetch_assoc()): ?>
-                            <tr>
-                                <td><?php echo $row['id']; ?></td>
-                                <td><?php echo $row['nome']; ?></td>
-                                <td><?php echo $row['nacionalidade']; ?></td>
-                                <td><?php echo $row['ano_nascimento']; ?></td>
 
-                                <td>
-                                    <a href="update.php?id=<?php echo $row['id']; ?>" class="nav-item btn btn-outline-dark">Editar Autor</a> |
-                                    <a href="delete.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Tem certeza que deseja excluir?')" class="nav-item btn btn-outline-dark">Excluir Autor</a>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="4">Nenhum autor encontrado.</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
     </div>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $row['descricao']; ?></h5>
-                        <p class="card-text"><?php echo $row['responsavel']; ?></p>
-                        <p class="card-text"><?php echo $row['prioridade']; ?></p>
-                        <p class="card-text"><?php echo $row['nome_setor']; ?></p>
-                        <label>Prioridade: </label>
+    <?php
 
-                        <div class="mb-3">
-                            <select name="prioridade" id="prior-select">
-                                <option value="" selected disabled>Selecione...</option>
-                                <option value="Baixa">Baixa</option>
-                                <option value="Média">Média</option>
-                                <option value="Alta">Alta</option>
-                            </select>
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "
+            <div class=\"container-fluid\">
+                <div class=\"row\">
+                    <div class=\"col\">
+                        <div class=\"card bg-light p-3 mb-3 mt-3 \">
+                            <div class=\"card-header fw-bold\">{$row['descricao']}</div>
+                            <div class=\"card-body\">
+                                <p class=\"card-text\">Usuário: {$row['nome']}</p>
+                                <p class=\"card-text\">Setor: {$row['nome_setor']}</p>
+                                <p class=\"card-text\">Prioridade: {$row['prioridade']}</p>
+                                <a method='GET' class='btn btn-primary mb-4 mt-2' href='public/tarefas/create.php?id={$row['id_tarefa']}'>Editar</a>
+                                <a class='btn btn-danger mb-4 b mt-2' href='public/tarefas/delete.php?id={$row[' id_tarefa']}'>Excluir</a>
+
+                                <form action='public/tarefas/updateStatus.php' method='POST'>
+                                    <select name='status_tarefa' class='form-select' required>
+                                        <option value='A fazer' selected>A fazer</option>
+                                        <option value='Fazendo'>Fazendo</option>
+                                        <option value='Pronto'>Pronto</option>
+                                    </select>
+                                    <input type='hidden' name='id_tarefa' value='{$row[' id_tarefa']}'>
+                                    <button type='submit' class='btn btn-primary'>Atualizar</button>
+                                </form>
+                            </div>
                         </div>
-
-                        <a href="#" class="btn btn-primary">Update</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+    ";
+        }
+    }
 
-
+    ?>
 
     <?php $conn->close(); ?>
 </body>
