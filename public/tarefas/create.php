@@ -1,6 +1,6 @@
 <?php
 
-include '../db_connect.php';
+include '../bd.php';
 include '../partials/header.php';
 
 if (isset($_GET['id'])) {

@@ -1,6 +1,6 @@
 <?php
 
-include '../db.php';
+include '../bd.php';
 
 $sql = "SELECT * FROM tarefas INNER JOIN usuario ON tarefas.responsavel usuarios.id WHERE status_tarefa = 'Pronto'";
 
