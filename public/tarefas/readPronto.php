@@ -2,7 +2,7 @@
 
 include '../bd.php';
 
-$sql = "SELECT * FROM tarefas INNER JOIN usuario ON tarefas.responsavel usuarios.id WHERE status_tarefa = 'Pronto'";
+$sql = "SELECT * FROM tarefas INNER JOIN usuarios ON tarefas.responsavel = usuarios.id WHERE status_tarefa = 'Pronto'";
 
 $result = $conn->query($sql);
 
@@ -23,11 +23,6 @@ $result = $conn->query($sql);
 </head>
 
 <body>
-
-    <div class="container-fluid">
-
-    </div>
-
     <?php
 
     if ($result->num_rows > 0) {
@@ -43,7 +38,7 @@ $result = $conn->query($sql);
                                 <p class=\"card-text\">Setor: {$row['nome_setor']}</p>
                                 <p class=\"card-text\">Prioridade: {$row['prioridade']}</p>
                                 <a method='GET' class='btn btn-primary mb-4 mt-2' href='public/tarefas/create.php?id={$row['id_tarefa']}'>Editar</a>
-                                <a class='btn btn-danger mb-4 b mt-2' href='public/tarefas/delete.php?id={$row[' id_tarefa']}'>Excluir</a>
+                                <a class='btn btn-danger mb-4 b mt-2' href='public/tarefas/delete.php?id={$row['id_tarefa']}'>Excluir</a>
 
                                 <form action='public/tarefas/updateStatus.php' method='POST'>
                                     <select name='status_tarefa' class='form-select' required>
@@ -51,8 +46,8 @@ $result = $conn->query($sql);
                                         <option value='Fazendo'>Fazendo</option>
                                         <option value='Pronto' selected>Pronto</option>
                                     </select>
-                                    <input type='hidden' name='id_tarefa' value='{$row[' id_tarefa']}'>
-                                    <button type='submit' class='btn btn-primary'>Atualizar</button>
+                                    <input type='hidden' name='id_tarefa' value='{$row['id_tarefa']}'>
+                                    <button type='submit' class='btn btn-primary mt-3'>Atualizar</button>
                                 </form>
                             </div>
                         </div>
@@ -64,8 +59,6 @@ $result = $conn->query($sql);
     }
 
     ?>
-
-    <?php $conn->close(); ?>
 </body>
-
+    <?php $conn->close(); ?>
 </html>

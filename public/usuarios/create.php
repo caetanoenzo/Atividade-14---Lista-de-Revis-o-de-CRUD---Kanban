@@ -9,8 +9,9 @@ $result = $conn->query($sql);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = $_POST['nome'];
     $email = $_POST['email'];
+    $senha = $_POST['senha'];
 
-    $sql = "INSERT INTO usuarios (nome, email) VALUES ('$nome', '$email')";
+    $sql = "INSERT INTO usuarios (nome, email, senha) VALUES ('$nome', '$email', '$senha')";
 
     if ($conn->query($sql) === true) {
         echo "Responsável criado com sucesso!<a href='read.php'>Ver Responsáveis</a>";
@@ -35,6 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
     <div class="container-fluid">
+
+        <div class="row">
+            <?php include __DIR__ . '../../partials/header.php'; ?>
+        </div>
+
         <div class="row ms-5 mt-5 me-5">
 
             <form action="" method="POST">

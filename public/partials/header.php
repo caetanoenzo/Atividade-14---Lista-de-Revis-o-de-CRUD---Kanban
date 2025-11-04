@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../../public/bd.php'; ?>
+<?php require_once __DIR__ . '../../bd.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">

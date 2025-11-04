@@ -1,9 +1,9 @@
 <?php
 
-include 'bd.php';
-$id = $_GET['id'];
+include '../bd.php';
+$id_tarefa = $_GET['id_tarefa'];
 
-$sql = " DELETE FROM tarefas WHERE id=$id ";
+$sql = " DELETE FROM tarefas WHERE id_tarefa=$id_tarefa";
 
 if ($conn->query($sql) === true) {
     header('Location: ../../index.php');
